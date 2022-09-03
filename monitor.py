@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from typing import Dict
+from typing import Dict, List, Any
 
 import evdev
 
@@ -30,6 +30,21 @@ def rich_range_prompt(a: int, b: int) -> int:
     return index
 
 
+def rich_get_array_index_prompt(array: List[Any], *, binary_prompt: str) -> int:
+    """Get an index in an array."""
+    if len(array) == 0:
+        index = -2
+    elif len(array) == 1:
+        if Confirm.ask(binary_prompt, default=True):
+            index = 0
+        else:
+            index = -1
+    else:
+        index = rich_range_prompt(1, len(array)) - 1
+
+    return index
+
+
 def get_device() -> evdev.device.InputDevice:
     """Get a device by listing all of them and prompting the user."""
     print("Fetching all the devices...")
@@ -39,17 +54,13 @@ def get_device() -> evdev.device.InputDevice:
     for i, device in enumerate(devices):
         print(f"{i+1}: {device.path} {device.name} {device.phys}")
 
-    if len(devices) == 0:
+    index = rich_get_array_index_prompt(devices, binary_prompt="Connect to the [i]device[/i]?")
+    if index == -1:
+        print("[b]OK :loudly_crying_face:")
+        exit(1)
+    elif index == -2:
         print("There is no device connected...\nPlease connect a device.")
         exit(2)
-    elif len(devices) == 1:
-        if Confirm.ask("Connect to the [i]device[/i]?", default=True):
-            index = 0
-        else:
-            print("[b]OK :loudly_crying_face:")
-            exit(0)
-    else:
-        index = rich_range_prompt(1, len(devices)) - 1
 
     print(f"Connecting to {device}...")
     device = evdev.InputDevice(devices[index])
