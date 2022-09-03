@@ -1,18 +1,11 @@
-from typing import Dict, List, Any
+from typing import Dict
 
 import evdev
 from rich import print
 
 from src import prompt
 
-AXES = [
-    "ABS_RZ",
-    "ABS_Z",
-    "ABS_RX",
-    "ABS_X",
-    "ABS_RY",
-    "ABS_Y"
-]
+AXES = ["ABS_RZ", "ABS_Z", "ABS_RX", "ABS_X", "ABS_RY", "ABS_Y"]
 
 
 def get_device() -> evdev.device.InputDevice:
@@ -24,7 +17,9 @@ def get_device() -> evdev.device.InputDevice:
     for i, device in enumerate(devices):
         print(f"{i+1}: {device.path} {device.name} {device.phys}")
 
-    index = prompt.rich_get_array_index_prompt(devices, binary_prompt="Connect to the [i]device[/i]?")
+    index = prompt.rich_get_array_index_prompt(
+        devices, binary_prompt="Connect to the [i]device[/i]?"
+    )
     if index == -1:
         print("[b]OK :loudly_crying_face:")
         exit(1)
@@ -47,7 +42,9 @@ def listen_to(device: evdev.device.InputDevice, joysticks: Dict[str, int]) -> No
         elif event.type == evdev.ecodes.EV_ABS:
             absevent = evdev.categorize(event)
             for axis in AXES:
-                if evdev.ecodes.bytype[absevent.event.type][absevent.event.code] == axis:
+                if (
+                    evdev.ecodes.bytype[absevent.event.type][absevent.event.code]
+                    == axis
+                ):
                     joysticks[axis] = absevent.event.value
             print(joysticks)
-

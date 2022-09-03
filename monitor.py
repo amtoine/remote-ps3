@@ -1,11 +1,6 @@
 #!/usr/bin/env python
-from typing import Dict, List, Any
 
-import evdev
-
-from rich import print
-
-from src import prompt, device
+from src import device
 
 
 def main():

@@ -1,4 +1,4 @@
-from typing import Dict, List, Any
+from typing import List, Any
 
 from rich import print
 
@@ -10,8 +10,8 @@ def rich_range_prompt(a: int, b: int) -> int:
     """Ask for an index in a range of numbers with rich."""
     while True:
         index = IntPrompt.ask(
-                f":rocket: Enter a number between [b]{a}[/b] and [b]{b}[/b]"
-            )
+            f":rocket: Enter a number between [b]{a}[/b] and [b]{b}[/b]"
+        )
         if index >= a and index <= b:
             break
         print(f":pile_of_poo: [prompt.invalid]Number must be between {a} and {b}")
@@ -32,4 +32,3 @@ def rich_get_array_index_prompt(array: List[Any], *, binary_prompt: str) -> int:
         index = rich_range_prompt(1, len(array)) - 1
 
     return index
-

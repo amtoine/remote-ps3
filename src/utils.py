@@ -12,4 +12,4 @@ def scale(val, src, dst):
 
 
 def scale_stick(value):
-    return scale(value,(0,255),(-100,100))
+    return scale(value, (0, 255), (-100, 100))
