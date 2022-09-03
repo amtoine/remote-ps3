@@ -33,7 +33,7 @@ def get_device() -> evdev.device.InputDevice:
         print("There is no device connected...\nPlease connect a device.")
         exit(2)
     elif len(devices) == 1:
-        if Confirm.ask("Connect to the [i]prompt[/i]?", default=True):
+        if Confirm.ask("Connect to the [i]device[/i]?", default=True):
             index = 0
         else:
             print("[b]OK :loudly_crying_face:")
