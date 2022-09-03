@@ -1,10 +1,20 @@
 #!/usr/bin/env python
+from typing import Dict
 
 import evdev
 
 from rich import print
 from rich.prompt import IntPrompt
 from rich.prompt import Confirm
+
+AXES = [
+    "ABS_RZ",
+    "ABS_Z",
+    "ABS_RX",
+    "ABS_X",
+    "ABS_RY",
+    "ABS_Y"
+]
 
 
 def rich_range_prompt(a: int, b: int) -> int:
@@ -47,13 +57,24 @@ def get_device() -> evdev.device.InputDevice:
     return device
 
 
-def main():
-    device = get_device()
-
+def listen_to(device: evdev.device.InputDevice, joysticks: Dict[str, int]) -> None:
+    """Listen to a device and print the key presses and the axes state."""
     print(f"Listening to {device}...")
     for event in device.read_loop():
         if event.type == evdev.ecodes.EV_KEY:
             print(evdev.categorize(event))
+        elif event.type == evdev.ecodes.EV_ABS:
+            absevent = evdev.categorize(event)
+            for axis in AXES:
+                if evdev.ecodes.bytype[absevent.event.type][absevent.event.code] == axis:
+                    joysticks[axis] = absevent.event.value
+            print(joysticks)
+
+
+def main():
+    joysticks = {axis: None for axis in AXES}
+    device = get_device()
+    listen_to(device, joysticks)
 
 
 if __name__ == "__main__":
