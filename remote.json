@@ -1,7 +1,8 @@
 {
-  "BTN_WEST": ["press", "windows+1"],
-  "BTN_NORTH": ["press", "windows+2"],
-  "BTN_EAST": ["press", "windows+3"],
+  "BTN_DPAD_RIGHT": ["press", 269025026],
+  "BTN_DPAD_UP": ["press", "media_volume_up"],
+  "BTN_DPAD_LEFT": ["press", 269025027],
+  "BTN_DPAD_DOWN": ["press", "media_volume_down"],
   "BTN_SOUTH": ["click", "left"],
   "ABS_X": ["move", "x"],
   "ABS_Y": ["move", "y"]
