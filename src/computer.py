@@ -13,7 +13,10 @@ def convert_action_to_key(action: Union[str, int]):
     if isinstance(action, int):
         key = KeyCode(action)
     elif isinstance(action, str):
-        key = Key.__dict__[action]
+        if action in Key.__dict__:
+            key = Key.__dict__[action]
+        else:
+            key = action
     return key
 
 
