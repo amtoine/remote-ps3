@@ -5,16 +5,11 @@ from typing import Dict
 import evdev
 from rich import print
 
-from src import device
-
-
-def remote_hook(key: evdev.events.KeyEvent, joysticks: Dict[str, int]) -> None:
-    """Procees the state the controller to emulate keyboard presses."""
-    print("remote control of the keyboard...")
+from src import device, hooks, state
 
 
 def main():
-    device.listen_to(device.get_device(), hook=remote_hook)
+    device.listen_to(device.get_device(), hook=hooks.remote_hook)
 
 
 if __name__ == "__main__":
