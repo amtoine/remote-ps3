@@ -6,6 +6,7 @@ import evdev
 from src import device
 
 AXIS_CENTER = 128
+AXIS_OFF_CENTER_TOLERANCE = 50
 
 
 @dataclass
@@ -34,7 +35,8 @@ class ControllerState:
         return [
             (axis, (value - AXIS_CENTER) / AXIS_CENTER)
             for axis, value in self.axes.items()
-            if value is not None and abs(value - AXIS_CENTER) > 10
+            if value is not None
+            and abs(value - AXIS_CENTER) > AXIS_OFF_CENTER_TOLERANCE
         ]
 
     def __repr__(self, *, ommit_none: bool = False) -> str:
