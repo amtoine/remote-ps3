@@ -1,22 +1,39 @@
-from typing import Dict
+from typing import Any, Dict
 
 import keyboard
 import mouse
 
 
-def send_to_keyboard(key: str, *, config: Dict[str, str]):
-    for controller_key, computer_key in config.items():
-        if key == controller_key:
-            keyboard.press_and_release(computer_key)
+def send_keyboard_press(action: str, *, kwargs: Dict[str, Any]):
+    keyboard.press_and_release(action)
 
 
-def send_to_mouse(
-    axis: str, value: int, *, config: Dict[str, str], mouse_speed: int
-):
-    for controller_axis, computer_mouse in config.items():
-        if axis == controller_axis:
-            if computer_mouse == "x":
-                movement = (value * mouse_speed, 0)
-            elif computer_mouse == "y":
-                movement = (0, value * mouse_speed)
-            mouse.move(*movement, absolute=False, duration=0)
+def send_mouse_click(action: str, *, kwargs: Dict[str, Any]):
+    mouse.click(action)
+
+
+def send_mouse_move(action: str, *, kwargs: Dict[str, Any]):
+    px_speed = kwargs["value"] * kwargs["speed"]
+    if action == "x":
+        movement = (px_speed, 0)
+    elif action == "y":
+        movement = (0, px_speed)
+    mouse.move(*movement, absolute=False, duration=0)
+
+
+ACTIONS = {
+    "press": send_keyboard_press,
+    "click": send_mouse_click,
+    "move": send_mouse_move,
+}
+
+
+def send(key: str, *, config: Dict[str, Any], kwargs: Dict[str, Any]):
+    if key in config:
+        action, arg = config[key]
+
+        if action not in ACTIONS:
+            print(f"Unknown action '{action}'...")
+            exit(0)
+
+        ACTIONS[action](arg, kwargs=kwargs)

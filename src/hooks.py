@@ -20,10 +20,10 @@ def remote_hook(
 ) -> None:
     """Procees the state the controller to emulate keyboard presses."""
     for key in controller_state.get_down_keys():
-        computer.send_to_keyboard(key, config=config["keyboard"])
+        computer.send(key, config=config, kwargs={})
         controller_state.keys[key] = 0
 
     for axis, value in controller_state.get_off_center_axes():
-        computer.send_to_mouse(
-            axis, value, config=config["mouse"], mouse_speed=MOUSE_SPEED
+        computer.send(
+            axis, config=config, kwargs={"value": value, "speed": MOUSE_SPEED}
         )
