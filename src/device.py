@@ -41,7 +41,11 @@ def listen_to(
     hook: Callable[[state.ControllerState], None] = DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
-    controller_state = state.ControllerState(keys={}, axes={})
+    keys = {}
+    for key in evdev.ecodes.keys.values():
+        keys[key[0] if isinstance(key, list) else key] = None
+    axes = {axis: None for axis in evdev.ecodes.ABS.values()}
+    controller_state = state.ControllerState(keys=keys, axes=axes)
 
     print(f"Listening to {device}...")
     for event in device.read_loop():
