@@ -14,8 +14,7 @@ def remote_hook(key: evdev.events.KeyEvent, joysticks: Dict[str, int]) -> None:
 
 
 def main():
-    joysticks = {axis: None for axis in device.AXES}
-    device.listen_to(device.get_device(), joysticks, hook=remote_hook)
+    device.listen_to(device.get_device(), hook=remote_hook)
 
 
 if __name__ == "__main__":
