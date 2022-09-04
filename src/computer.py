@@ -1,4 +1,4 @@
-from typing import Any, Dict, Union
+from typing import Any, Dict, List, Union
 
 from pynput.keyboard import Controller as KeyboardController
 from pynput.keyboard import Key, KeyCode
@@ -9,13 +9,23 @@ mouse = MouseController()
 keyboard = KeyboardController()
 
 
-def send_keyboard_press(action: Union[str, int], *, kwargs: Dict[str, Any]):
+def convert_action_to_key(action: Union[str, int]):
     if isinstance(action, int):
         key = KeyCode(action)
     elif isinstance(action, str):
         key = Key.__dict__[action]
-    keyboard.press(key)
-    keyboard.release(key)
+    return key
+
+
+def send_keyboard_press(
+    actions: List[Union[str, int]], *, kwargs: Dict[str, Any]
+):
+    keys = [convert_action_to_key(action) for action in actions]
+    for key in keys:
+        keyboard.press(key)
+
+    for key in keys[::-1]:
+        keyboard.release(key)
 
 
 def send_mouse_click(action: str, *, kwargs: Dict[str, Any]):
