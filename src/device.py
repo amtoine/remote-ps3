@@ -5,6 +5,8 @@ from rich import print
 
 from src import prompt, state
 
+OMMIT_NONE = True
+
 
 def get_device() -> evdev.device.InputDevice:
     """Get a device by listing all of them and prompting the user."""
@@ -33,7 +35,7 @@ def get_device() -> evdev.device.InputDevice:
 
 def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
     """Print the state of the controller."""
-    print(controller_state)
+    print(controller_state.__repr__(ommit_none=OMMIT_NONE))
 
 
 def listen_to(

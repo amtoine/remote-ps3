@@ -24,3 +24,21 @@ class ControllerState:
 
     def update_axis(self, event: evdev.events.AbsEvent) -> None:
         self.axes[evdev.ecodes.ABS[event.event.code]] = event.event.value
+
+    def __repr__(self, *, ommit_none: bool = False) -> str:
+        if ommit_none:
+            keys = {
+                key: value
+                for key, value in self.keys.items()
+                if value is not None
+            }
+            axes = {
+                key: value
+                for key, value in self.axes.items()
+                if value is not None
+            }
+        else:
+            keys = self.keys
+            axes = self.axes
+
+        return f"KEYS: {keys}\nAXES: {axes}"
