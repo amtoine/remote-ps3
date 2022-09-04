@@ -5,8 +5,6 @@ from rich import print
 
 from src import prompt, state
 
-AXES = ["ABS_RZ", "ABS_Z", "ABS_RX", "ABS_X", "ABS_RY", "ABS_Y"]
-
 
 def get_device() -> evdev.device.InputDevice:
     """Get a device by listing all of them and prompting the user."""
@@ -43,9 +41,7 @@ def listen_to(
     hook: Callable = DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
-    controller_state = state.ControllerState(
-        keys={}, axes={axis: None for axis in AXES}
-    )
+    controller_state = state.ControllerState(keys={}, axes={})
 
     print(f"Listening to {device}...")
     for event in device.read_loop():

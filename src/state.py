@@ -14,9 +14,13 @@ class ControllerState:
     axes: Dict[str, int]
 
     def update_keys(self, event: evdev.events.KeyEvent) -> None:
-        self.keys[event.scancode] = event.keystate
+        keys = evdev.ecodes.keys[event.scancode]
+        key_name = (
+            sorted(keys, key=lambda x: len(x))[1]
+            if isinstance(keys, list)
+            else keys
+        )
+        self.keys[key_name] = event.keystate
 
     def update_axis(self, event: evdev.events.AbsEvent) -> None:
-        for axis in device.AXES:
-            if evdev.ecodes.bytype[event.event.type][event.event.code] == axis:
-                self.axes[axis] = event.event.value
+        self.axes[evdev.ecodes.ABS[event.event.code]] = event.event.value
