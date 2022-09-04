@@ -1,9 +1,9 @@
-from typing import Dict, Callable
+from typing import Callable, Dict
 
 import evdev
 from rich import print
 
-from src import prompt
+from src import prompt, state
 
 AXES = ["ABS_RZ", "ABS_Z", "ABS_RX", "ABS_X", "ABS_RY", "ABS_Y"]
 
@@ -33,13 +33,9 @@ def get_device() -> evdev.device.InputDevice:
     return device
 
 
-def DEFAULT_CONTROLLER_HOOK(
-    key: evdev.events.KeyEvent, joysticks: Dict[str, int]
-) -> None:
+def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
     """Print the state of the controller."""
-    if key is not None:
-        print(key)
-    print(joysticks)
+    print(controller_state)
 
 
 def listen_to(
@@ -47,19 +43,18 @@ def listen_to(
     hook: Callable = DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
-    joysticks = {axis: None for axis in AXES}
+    controller_state = state.ControllerState(
+        keys={}, axes={axis: None for axis in AXES}
+    )
+
     print(f"Listening to {device}...")
     for event in device.read_loop():
-        key = None
+
         if event.type == evdev.ecodes.EV_KEY:
-            key = evdev.categorize(event)
+            controller_state.update_keys(evdev.categorize(event))
+
         elif event.type == evdev.ecodes.EV_ABS:
-            absevent = evdev.categorize(event)
-            for axis in AXES:
-                if (
-                    evdev.ecodes.bytype[absevent.event.type][absevent.event.code]
-                    == axis
-                ):
-                    joysticks[axis] = absevent.event.value
+            controller_state.update_axis(evdev.categorize(event))
+
         if hook is not None:
-            hook(key=key, joysticks=joysticks)
+            hook(controller_state=controller_state)
