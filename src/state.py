@@ -5,6 +5,9 @@ import evdev
 
 from src import device
 
+AXIS_CENTER = 128
+AXIS_OFF_CENTER_TOLERANCE = 50
+
 
 @dataclass
 class ControllerState:
@@ -24,6 +27,17 @@ class ControllerState:
 
     def update_axis(self, event: evdev.events.AbsEvent) -> None:
         self.axes[evdev.ecodes.ABS[event.event.code]] = event.event.value
+
+    def get_down_keys(self):
+        return [key for key, pressed in self.keys.items() if pressed]
+
+    def get_off_center_axes(self):
+        return [
+            (axis, (value - AXIS_CENTER) / AXIS_CENTER)
+            for axis, value in self.axes.items()
+            if value is not None
+            and abs(value - AXIS_CENTER) > AXIS_OFF_CENTER_TOLERANCE
+        ]
 
     def __repr__(self, *, ommit_none: bool = False) -> str:
         if ommit_none:

@@ -3,9 +3,7 @@ from typing import Callable, Dict
 import evdev
 from rich import print
 
-from src import prompt, state
-
-OMMIT_NONE = True
+from src import hooks, prompt, state
 
 
 def get_device() -> evdev.device.InputDevice:
@@ -33,14 +31,11 @@ def get_device() -> evdev.device.InputDevice:
     return device
 
 
-def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
-    """Print the state of the controller."""
-    print(controller_state.__repr__(ommit_none=OMMIT_NONE))
-
-
 def listen_to(
     device: evdev.device.InputDevice,
-    hook: Callable[[state.ControllerState], None] = DEFAULT_CONTROLLER_HOOK,
+    hook: Callable[
+        [state.ControllerState], None
+    ] = hooks.DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
     keys = {}
