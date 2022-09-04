@@ -38,7 +38,7 @@ def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
 
 def listen_to(
     device: evdev.device.InputDevice,
-    hook: Callable = DEFAULT_CONTROLLER_HOOK,
+    hook: Callable[[state.ControllerState], None] = DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
     controller_state = state.ControllerState(keys={}, axes={})
@@ -53,4 +53,4 @@ def listen_to(
             controller_state.update_axis(evdev.categorize(event))
 
         if hook is not None:
-            hook(controller_state=controller_state)
+            hook(controller_state)
