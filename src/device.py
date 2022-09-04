@@ -33,14 +33,20 @@ def get_device() -> evdev.device.InputDevice:
     return device
 
 
-def DEFAULT_CONTROLLER_HOOK(key: evdev.events.KeyEvent, joysticks: Dict[str, int]) -> None:
+def DEFAULT_CONTROLLER_HOOK(
+    key: evdev.events.KeyEvent, joysticks: Dict[str, int]
+) -> None:
     """Print the state of the controller."""
     if key is not None:
         print(key)
     print(joysticks)
 
 
-def listen_to(device: evdev.device.InputDevice, joysticks: Dict[str, int], hook: Callable = DEFAULT_CONTROLLER_HOOK) -> None:
+def listen_to(
+    device: evdev.device.InputDevice,
+    joysticks: Dict[str, int],
+    hook: Callable = DEFAULT_CONTROLLER_HOOK,
+) -> None:
     """Listen to a device and print the key presses and the axes state."""
     print(f"Listening to {device}...")
     for event in device.read_loop():
