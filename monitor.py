@@ -4,8 +4,7 @@ from src import device
 
 
 def main():
-    joysticks = {axis: None for axis in device.AXES}
-    device.listen_to(device.get_device(), joysticks)
+    device.listen_to(device.get_device())
 
 
 if __name__ == "__main__":

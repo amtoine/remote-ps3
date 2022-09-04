@@ -44,10 +44,10 @@ def DEFAULT_CONTROLLER_HOOK(
 
 def listen_to(
     device: evdev.device.InputDevice,
-    joysticks: Dict[str, int],
     hook: Callable = DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
+    joysticks = {axis: None for axis in AXES}
     print(f"Listening to {device}...")
     for event in device.read_loop():
         key = None
