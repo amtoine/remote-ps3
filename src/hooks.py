@@ -1,8 +1,10 @@
+from typing import Any, Dict
+
 import keyboard
 import mouse
 from rich import print
 
-from src import state
+from src import computer, state
 
 OMMIT_NONE = True
 MOUSE_SPEED = 10
@@ -13,21 +15,15 @@ def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
     print(controller_state.__repr__(ommit_none=OMMIT_NONE))
 
 
-def remote_hook(controller_state: state.ControllerState) -> None:
+def remote_hook(
+    controller_state: state.ControllerState, *, config: Dict[str, Any]
+) -> None:
     """Procees the state the controller to emulate keyboard presses."""
     for key in controller_state.get_down_keys():
-        if key == "BTN_SOUTH":
-            keyboard.press_and_release("windows+space")
-        elif key == "BTN_WEST":
-            keyboard.press_and_release("windows+1")
-        elif key == "BTN_NORTH":
-            keyboard.press_and_release("windows+2")
-        elif key == "BTN_EAST":
-            keyboard.press_and_release("windows+3")
+        computer.send_to_keyboard(key, config=config["keyboard"])
         controller_state.keys[key] = 0
 
     for axis, value in controller_state.get_off_center_axes():
-        if axis == "ABS_X":
-            mouse.move(value * MOUSE_SPEED, 0, absolute=False, duration=0)
-        if axis == "ABS_Y":
-            mouse.move(0, value * MOUSE_SPEED, absolute=False, duration=0)
+        computer.send_to_mouse(
+            axis, value, config=config["mouse"], mouse_speed=MOUSE_SPEED
+        )

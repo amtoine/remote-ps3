@@ -1,0 +1,12 @@
+{
+  "keyboard": {
+    "BTN_SOUTH": "windows+space",
+    "BTN_WEST": "windows+1",
+    "BTN_NORTH": "windows+2",
+    "BTN_EAST": "windows+3"
+  },
+  "mouse": {
+    "ABS_X": "x",
+    "ABS_Y": "y"
+  }
+}
