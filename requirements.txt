@@ -1,3 +1,5 @@
 evdev==1.6.0
+keyboard==0.13.5
+mouse==0.7.1
 pre-commit==2.20.0
 rich==12.5.1
