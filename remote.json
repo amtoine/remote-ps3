@@ -1,21 +1,59 @@
 {
-  "BTN_DPAD_RIGHT": ["press", ["shift", 269025026]],
-  "BTN_DPAD_UP": ["press", ["media_volume_up"]],
-  "BTN_DPAD_LEFT": ["press", ["shift", 269025027]],
-  "BTN_DPAD_DOWN": ["press", ["media_volume_down"]],
+    "qutebrowser": {
+        "BTN_DPAD_RIGHT": ["press", ["shift", 269025026]],
+        "BTN_DPAD_UP": ["press", ["media_volume_up"]],
+        "BTN_DPAD_LEFT": ["press", ["shift", 269025027]],
+        "BTN_DPAD_DOWN": ["press", ["media_volume_down"]],
 
-  "BTN_WEST": ["press", ["i", "f", "esc"]],
-  "BTN_EAST": ["press", ["i", "space", "esc"]],
+        "BTN_WEST": ["press", ["i", "f", "esc"]],
+        "BTN_EAST": ["press", ["i", "space", "esc"]],
 
-  "BTN_TL": ["press", ["i", "shift", "p", "esc"]],
-  "BTN_TR": ["press", ["i", "shift", "n", "esc"]],
-  "BTN_TL2": ["press", ["i", "left", "esc"]],
-  "BTN_TR2": ["press", ["i", "right", "esc"]],
+        "BTN_TL": ["press", ["i", "shift", "p", "esc"]],
+        "BTN_TR": ["press", ["i", "shift", "n", "esc"]],
+        "BTN_TL2": ["press", ["i", "left", "esc"]],
+        "BTN_TR2": ["press", ["i", "right", "esc"]],
 
-  "BTN_MODE": ["press", ["esc"]],
+        "BTN_MODE": ["press", ["esc"]],
 
-  "BTN_SOUTH": ["click", "left"],
+        "BTN_SOUTH": ["click", "left"],
 
-  "ABS_X": ["move", "x"],
-  "ABS_Y": ["move", "y"]
+        "ABS_X": ["move", "x"],
+        "ABS_Y": ["move", "y"]
+    },
+    "firefox": {
+        "BTN_DPAD_RIGHT": ["press", ["shift", 269025026]],
+        "BTN_DPAD_UP": ["press", ["media_volume_up"]],
+        "BTN_DPAD_LEFT": ["press", ["shift", 269025027]],
+        "BTN_DPAD_DOWN": ["press", ["media_volume_down"]],
+
+        "BTN_WEST": ["press", ["f"]],
+        "BTN_EAST": ["press", ["space"]],
+
+        "BTN_TL2": ["press", ["left"]],
+        "BTN_TR2": ["press", ["right"]],
+
+        "BTN_SOUTH": ["click", "left"],
+
+        "ABS_X": ["move", "x"],
+        "ABS_Y": ["move", "y"]
+    },
+    "mpv": {
+        "BTN_DPAD_RIGHT": ["press", ["shift", 269025026]],
+        "BTN_DPAD_UP": ["press", ["media_volume_up"]],
+        "BTN_DPAD_LEFT": ["press", ["shift", 269025027]],
+        "BTN_DPAD_DOWN": ["press", ["media_volume_down"]],
+
+        "BTN_WEST": ["press", ["f"]],
+        "BTN_EAST": ["press", ["space", "o"]],
+
+        "BTN_TL": ["press", ["<", "i"]],
+        "BTN_TR": ["press", [">", "i"]],
+        "BTN_TL2": ["press", ["left", "o"]],
+        "BTN_TR2": ["press", ["right", "o"]],
+
+        "BTN_SOUTH": ["click", "left"],
+
+        "ABS_X": ["move", "x"],
+        "ABS_Y": ["move", "y"]
+    }
 }
