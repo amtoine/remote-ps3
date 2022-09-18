@@ -12,9 +12,13 @@ from src import device, hooks
 
 def main(*, profile: str):
     with open("remote.json", "r") as remote_config_file:
-        config = json.load(remote_config_file)[profile]
+        config = json.load(remote_config_file)
 
-    configured_remote_hook = lambda s: hooks.remote_hook(s, config=config)
+    common = config["common"]
+    profile_config = config["profiles"][profile]
+    profile_config.update(common)
+
+    configured_remote_hook = lambda s: hooks.remote_hook(s, config=profile_config)
     device.listen_to(device.get_device(), hook=configured_remote_hook)
 
 
