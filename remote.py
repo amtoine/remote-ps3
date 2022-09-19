@@ -13,9 +13,7 @@ FILENAME = "remote.json"
 
 
 def main(*, profile: str):
-    profile_config = utils.get_config_with_profile(
-        profile, filename=FILENAME
-    )
+    profile_config = utils.get_config_with_profile(profile, filename=FILENAME)
 
     device.listen_to(
         device.get_device(),

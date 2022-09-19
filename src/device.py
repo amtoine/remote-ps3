@@ -57,7 +57,9 @@ def listen_to(
             controller_state.update_axis(evdev.categorize(event))
 
         if hook is not None:
-            new_profile = hook(controller_state, config=config, profile=profile)
+            new_profile = hook(
+                controller_state, config=config, profile=profile
+            )
             if profile != new_profile:
                 profile = new_profile
                 config = utils.get_config_with_profile(

@@ -63,7 +63,9 @@ ACTIONS = {
 }
 
 
-def send(key: str, *, config: Dict[str, Any], kwargs: Dict[str, Any]) -> Union[None, str]:
+def send(
+    key: str, *, config: Dict[str, Any], kwargs: Dict[str, Any]
+) -> Union[None, str]:
     if key in config:
         action, arg = config[key]
 

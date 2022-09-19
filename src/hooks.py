@@ -16,7 +16,10 @@ def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
 
 
 def remote_hook(
-    controller_state: state.ControllerState, *, config: Dict[str, Any], profile: str
+    controller_state: state.ControllerState,
+    *,
+    config: Dict[str, Any],
+    profile: str
 ) -> str:
     """Procees the state the controller to emulate keyboard presses."""
     new_profile = profile
