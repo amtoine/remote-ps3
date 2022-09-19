@@ -6,6 +6,7 @@
         "BTN_DPAD_DOWN": ["press", ["media_volume_down"]],
 
         "BTN_MODE": ["profile", ""],
+        "BTN_SELECT": ["press", ["esc"]],
 
         "BTN_SOUTH": ["click", "left"],
 
