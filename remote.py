@@ -7,16 +7,11 @@ from typing import Dict
 import evdev
 from rich import print
 
-from src import device, hooks
+from src import device, hooks, utils
 
 
 def main(*, profile: str):
-    with open("remote.json", "r") as remote_config_file:
-        config = json.load(remote_config_file)
-
-    common = config["common"]
-    profile_config = config["profiles"][profile]
-    profile_config.update(common)
+    profile_config = utils.get_config_with_profile(profile, filename="remote.json")
 
     configured_remote_hook = lambda s: hooks.remote_hook(s, config=profile_config)
     device.listen_to(device.get_device(), hook=configured_remote_hook)
