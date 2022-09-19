@@ -28,12 +28,11 @@ def main(*, profile: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    profiles = utils.PROFILES
     parser.add_argument(
         "--profile",
         "-p",
-        choices=profiles,
-        required=True,
+        choices=utils.PROFILES,
+        default=utils.PROFILES[0],
         help=(
             "A different profile will send different keys to "
             "the host machine, e.g. `qutebrowser` requires to "
