@@ -11,9 +11,13 @@ from src import device, hooks, utils
 
 
 def main(*, profile: str):
-    profile_config = utils.get_config_with_profile(profile, filename="remote.json")
+    profile_config = utils.get_config_with_profile(
+        profile, filename="remote.json"
+    )
 
-    configured_remote_hook = lambda s: hooks.remote_hook(s, config=profile_config)
+    configured_remote_hook = lambda s: hooks.remote_hook(
+        s, config=profile_config
+    )
     device.listen_to(device.get_device(), hook=configured_remote_hook)
 
 
@@ -34,7 +38,7 @@ if __name__ == "__main__":
             "`mpv` was designed to watch local videos. "
             "`qutebrowser` for youtube in mind only. "
             "and `firefox` for all the rest (netflix, primevideos, ...)"
-        )
+        ),
     )
 
     args = parser.parse_args()
