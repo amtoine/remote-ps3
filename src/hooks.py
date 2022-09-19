@@ -10,7 +10,9 @@ OMMIT_NONE = True
 MOUSE_SPEED = 10
 
 
-def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState) -> None:
+def DEFAULT_CONTROLLER_HOOK(
+    controller_state: state.ControllerState, **kwargs
+) -> None:
     """Print the state of the controller."""
     print(controller_state.__repr__(ommit_none=OMMIT_NONE))
 
