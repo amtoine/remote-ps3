@@ -2,6 +2,8 @@ from typing import Any, Dict
 
 import json
 
+PROFILES = ["qutebrowser", "mpv", "firefox"]
+
 
 def scale(val, src, dst):
     """

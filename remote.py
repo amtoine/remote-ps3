@@ -24,7 +24,7 @@ def main(*, profile: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    profiles = ["qutebrowser", "mpv", "firefox"]
+    profiles = utils.PROFILES
     parser.add_argument(
         "--profile",
         "-p",
