@@ -9,16 +9,21 @@ from rich import print
 
 from src import device, hooks, utils
 
+FILENAME = "remote.json"
+
 
 def main(*, profile: str):
     profile_config = utils.get_config_with_profile(
-        profile, filename="remote.json"
+        profile, filename=FILENAME
     )
 
-    configured_remote_hook = lambda s: hooks.remote_hook(
-        s, config=profile_config
+    device.listen_to(
+        device.get_device(),
+        hook=hooks.remote_hook,
+        config=profile_config,
+        profile=profile,
+        filename=FILENAME,
     )
-    device.listen_to(device.get_device(), hook=configured_remote_hook)
 
 
 if __name__ == "__main__":
