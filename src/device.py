@@ -1,9 +1,9 @@
-from typing import Callable, Dict
+from typing import Callable, Dict, Any
 
 import evdev
 from rich import print
 
-from src import hooks, prompt, state
+from src import hooks, prompt, state, utils
 
 
 def get_device() -> evdev.device.InputDevice:
@@ -33,6 +33,9 @@ def get_device() -> evdev.device.InputDevice:
 
 def listen_to(
     device: evdev.device.InputDevice,
+    config: Dict[str, Any],
+    profile: str,
+    filename: str,
     hook: Callable[
         [state.ControllerState], None
     ] = hooks.DEFAULT_CONTROLLER_HOOK,
@@ -54,4 +57,11 @@ def listen_to(
             controller_state.update_axis(evdev.categorize(event))
 
         if hook is not None:
-            hook(controller_state)
+            new_profile = hook(
+                controller_state, config=config, profile=profile
+            )
+            if profile != new_profile:
+                profile = new_profile
+                config = utils.get_config_with_profile(
+                    profile, filename=filename
+                )

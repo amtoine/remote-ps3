@@ -7,30 +7,32 @@ from typing import Dict
 import evdev
 from rich import print
 
-from src import device, hooks
+from src import device, hooks, utils
+
+FILENAME = "remote.json"
 
 
 def main(*, profile: str):
-    with open("remote.json", "r") as remote_config_file:
-        config = json.load(remote_config_file)
+    connected_device = device.get_device()
+    profile_config = utils.get_config_with_profile(profile, filename=FILENAME)
 
-    common = config["common"]
-    profile_config = config["profiles"][profile]
-    profile_config.update(common)
-
-    configured_remote_hook = lambda s: hooks.remote_hook(s, config=profile_config)
-    device.listen_to(device.get_device(), hook=configured_remote_hook)
+    device.listen_to(
+        connected_device,
+        hook=hooks.remote_hook,
+        config=profile_config,
+        profile=profile,
+        filename=FILENAME,
+    )
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    profiles = ["qutebrowser", "mpv", "firefox"]
     parser.add_argument(
         "--profile",
         "-p",
-        choices=profiles,
-        required=True,
+        choices=utils.PROFILES,
+        default=utils.PROFILES[0],
         help=(
             "A different profile will send different keys to "
             "the host machine, e.g. `qutebrowser` requires to "
@@ -39,7 +41,7 @@ if __name__ == "__main__":
             "`mpv` was designed to watch local videos. "
             "`qutebrowser` for youtube in mind only. "
             "and `firefox` for all the rest (netflix, primevideos, ...)"
-        )
+        ),
     )
 
     args = parser.parse_args()

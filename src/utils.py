@@ -1,3 +1,11 @@
+from typing import Any, Dict
+
+from plyer import notification
+import json
+
+PROFILES = ["qutebrowser", "mpv", "firefox"]
+
+
 def scale(val, src, dst):
     """
     Scale the given value from the scale of src to the scale of dst.
@@ -8,8 +16,29 @@ def scale(val, src, dst):
 
     example: print(scale(99, (0.0, 99.0), (-1.0, +1.0)))
     """
-    return (float(val - src[0]) / (src[1] - src[0])) * (dst[1] - dst[0]) + dst[0]
+    return (float(val - src[0]) / (src[1] - src[0])) * (dst[1] - dst[0]) + dst[
+        0
+    ]
 
 
 def scale_stick(value):
     return scale(value, (0, 255), (-100, 100))
+
+
+def get_config_with_profile(profile: str, *, filename: str) -> Dict[str, Any]:
+    """Extract a profile from the global configuration."""
+    with open(filename, "r") as remote_config_file:
+        config = json.load(remote_config_file)
+
+    common = config["common"]
+    profile_config = config["profiles"][profile]
+    profile_config.update(common)
+
+    notification.notify(
+        title="PS3 remote.py",
+        message=f"Profile: {profile}",
+        app_icon=None,
+        timeout=3,
+    )
+
+    return profile_config
