@@ -22,6 +22,14 @@ def convert_action_to_key(action: Union[str, int]):
     return key
 
 
+def convert_action_to_keys(action: Union[str, int]):
+    if isinstance(action, list):
+        keys = [convert_action_to_key(el) for el in action]
+    else:
+        keys = [convert_action_to_key(action)]
+    return keys
+
+
 def cycle_through_profiles(arg: str, kwargs: Dict[str, Any]) -> str:
     profile = kwargs["profile"]
     idx = utils.PROFILES.index(profile)
@@ -31,15 +39,20 @@ def cycle_through_profiles(arg: str, kwargs: Dict[str, Any]) -> str:
     return new_profile
 
 
-def send_keyboard_press(
-    actions: List[Union[str, int]], *, kwargs: Dict[str, Any]
-) -> None:
-    keys = [convert_action_to_key(action) for action in actions]
+def send_keyboard_press(keys) -> None:
     for key in keys:
         keyboard.press(key)
 
     for key in keys[::-1]:
         keyboard.release(key)
+
+
+def send_keyboard_presses(
+    actions: List[Union[str, int]], *, kwargs: Dict[str, Any]
+) -> None:
+    all_keys = [convert_action_to_keys(action) for action in actions]
+    for keys in all_keys:
+        send_keyboard_press(keys)
 
 
 def send_mouse_click(action: str, *, kwargs: Dict[str, Any]) -> None:
@@ -57,7 +70,7 @@ def send_mouse_move(action: str, *, kwargs: Dict[str, Any]) -> None:
 
 ACTIONS = {
     "profile": cycle_through_profiles,
-    "press": send_keyboard_press,
+    "press": send_keyboard_presses,
     "click": send_mouse_click,
     "move": send_mouse_move,
 }
