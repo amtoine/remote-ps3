@@ -5,7 +5,7 @@ from pynput.keyboard import Key, KeyCode
 from pynput.mouse import Button
 from pynput.mouse import Controller as MouseController
 
-from src import utils
+from remote import utils
 
 mouse = MouseController()
 keyboard = KeyboardController()

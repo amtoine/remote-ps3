@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config.sh
+source config/install.sh
 
 if [ -d "$venv" ]; then
   $RM -rf "$venv"

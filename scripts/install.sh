@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config.sh
+source config/install.sh
 
 if [ ! -d "$venv" ]; then
   echo "not installed..."
@@ -8,6 +8,7 @@ if [ ! -d "$venv" ]; then
   virtualenv "$venv"
   source "$venv/bin/activate"
   pip install -r requirements.txt
+  pip install -e .
   echo "installation done!"
 else
   echo "already installed!"
@@ -18,8 +19,12 @@ path=$(pwd)
 cat << EOF > "$exe"
 #!/usr/bin/env bash
 source $venv/bin/activate
-python $path/remote.py --config $path/remote.json
+python $path/scripts/run.py --config $path/config/remote.json
 EOF
 
 chmod +x "$exe"
-cp "$exe" "$bin"
+cp "$exe" "$bin" --verbose
+if [ ! -d build ]; then
+  mkdir build
+fi
+mv "$exe" build --verbose

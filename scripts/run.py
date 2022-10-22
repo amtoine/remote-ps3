@@ -7,7 +7,7 @@ from typing import Dict
 import evdev
 from rich import print
 
-from src import device, hooks, utils
+from remote import device, hooks, utils
 
 
 def main(*, profile: str, config: str):
@@ -41,7 +41,7 @@ if __name__ == "__main__":
             "and `firefox` for all the rest (netflix, primevideos, ...)"
         ),
     )
-    default = "remote.json"
+    default = "config/remote.json"
     parser.add_argument(
         "--config",
         "-c",

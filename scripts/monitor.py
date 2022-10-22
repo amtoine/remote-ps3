@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from src import device
+from remote import device
 
 
 def main():

@@ -4,7 +4,7 @@ import keyboard
 import mouse
 from rich import print
 
-from src import computer, state
+from remote import computer, state
 
 OMMIT_NONE = True
 MOUSE_SPEED = 10
