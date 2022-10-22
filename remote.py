@@ -9,19 +9,17 @@ from rich import print
 
 from src import device, hooks, utils
 
-FILENAME = "remote.json"
 
-
-def main(*, profile: str):
+def main(*, profile: str, config: str):
     connected_device = device.get_device()
-    profile_config = utils.get_config_with_profile(profile, filename=FILENAME)
+    profile_config = utils.get_config_with_profile(profile, filename=config)
 
     device.listen_to(
         connected_device,
         hook=hooks.remote_hook,
         config=profile_config,
         profile=profile,
-        filename=FILENAME,
+        filename=config,
     )
 
 
@@ -43,6 +41,14 @@ if __name__ == "__main__":
             "and `firefox` for all the rest (netflix, primevideos, ...)"
         ),
     )
+    default = "remote.json"
+    parser.add_argument(
+        "--config",
+        "-c",
+        type=str,
+        default=default,
+        help=f"the path to the JSON config file (defaults to '{default}')."
+    )
 
     args = parser.parse_args()
-    main(profile=args.profile)
+    main(profile=args.profile, config=args.config)
