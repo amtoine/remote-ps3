@@ -8,6 +8,7 @@ if [ ! -d "$venv" ]; then
   virtualenv "$venv"
   source "$venv/bin/activate"
   pip install -r requirements.txt
+  pip install -e .
   echo "installation done!"
 else
   echo "already installed!"
