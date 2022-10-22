@@ -18,7 +18,7 @@ path=$(pwd)
 cat << EOF > "$exe"
 #!/usr/bin/env bash
 source $venv/bin/activate
-python $path/scripts/remote.py --config $path/config/remote.json
+python $path/scripts/run.py --config $path/config/remote.json
 EOF
 
 chmod +x "$exe"
