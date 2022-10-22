@@ -22,4 +22,8 @@ python $path/scripts/remote.py --config $path/config/remote.json
 EOF
 
 chmod +x "$exe"
-cp "$exe" "$bin"
+cp "$exe" "$bin" --verbose
+if [ ! -d build ]; then
+  mkdir build
+fi
+mv "$exe" build --verbose
