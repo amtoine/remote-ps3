@@ -7,7 +7,7 @@ from typing import Dict
 import evdev
 from rich import print
 
-from src import device, hooks, utils
+from remote import device, hooks, utils
 
 
 def main(*, profile: str, config: str):
