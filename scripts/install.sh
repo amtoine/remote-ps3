@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
 source config/install.sh
+source scripts/colors.sh
 
 if [ ! -d "$venv" ]; then
-  echo "not installed..."
-  echo "installing..."
+  echo "${cyan}$venv${end} is ${red}not installed${end}..."
+  echo "${yellow}installing ${cyan}$venv${end}..."
   virtualenv "$venv"
   source "$venv/bin/activate"
   pip install -r requirements.txt
   pip install -e .
-  echo "installation done!"
+  echo "installation of ${cyan}$venv${end} is ${green}successful${end}!"
 else
-  echo "already installed!"
+  echo "${cyan}$venv${end}is ${yellow}already installed${end}!"
 fi
 
 path=$(pwd)
