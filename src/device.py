@@ -3,7 +3,7 @@ from typing import Callable, Dict, Any
 import evdev
 from rich import print
 
-from src import hooks, prompt, state, utils
+from remote import hooks, prompt, state, utils
 
 
 def get_device() -> evdev.device.InputDevice:
