@@ -1,7 +1,5 @@
 from typing import Any, Dict
 
-import keyboard
-import mouse
 from rich import print
 
 from remote import computer, state
