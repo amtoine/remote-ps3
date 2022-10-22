@@ -17,9 +17,9 @@ else
   echo "${cyan}$bin/$exe${end} is ${red}not installed${end}..."
 fi
 
-if [ -f "build/$exe" ]; then
-  echo "${yellow}removing ${cyan}build/$exe${end}!"
-  $RM "build/$exe"
+if [ -f "$build/$exe" ]; then
+  echo "${yellow}removing ${cyan}$build/$exe${end}!"
+  $RM "$build/$exe"
 else
-  echo "${cyan}build/$exe${end} is ${red}not built${end}..."
+  echo "${cyan}$build/$exe${end} is ${red}not built${end}..."
 fi

@@ -25,7 +25,7 @@ EOF
 
 chmod +x "$exe"
 cp "$exe" "$bin" --verbose
-if [ ! -d build ]; then
-  mkdir build
+if [ ! -d "$build" ]; then
+  mkdir "$build"
 fi
-mv "$exe" build --verbose
+mv "$exe" "$build" --verbose
