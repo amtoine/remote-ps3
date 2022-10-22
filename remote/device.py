@@ -36,9 +36,7 @@ def listen_to(
     config: Dict[str, Any],
     profile: str,
     filename: str,
-    hook: Callable[
-        [state.ControllerState], None
-    ] = hooks.DEFAULT_CONTROLLER_HOOK,
+    hook: Callable[[state.ControllerState], None] = hooks.DEFAULT_CONTROLLER_HOOK,
 ) -> None:
     """Listen to a device and print the key presses and the axes state."""
     keys = {}
@@ -57,11 +55,7 @@ def listen_to(
             controller_state.update_axis(evdev.categorize(event))
 
         if hook is not None:
-            new_profile = hook(
-                controller_state, config=config, profile=profile
-            )
+            new_profile = hook(controller_state, config=config, profile=profile)
             if profile != new_profile:
                 profile = new_profile
-                config = utils.get_config_with_profile(
-                    profile, filename=filename
-                )
+                config = utils.get_config_with_profile(profile, filename=filename)

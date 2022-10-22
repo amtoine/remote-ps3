@@ -17,9 +17,7 @@ class ControllerState:
     def update_keys(self, event: evdev.events.KeyEvent) -> None:
         keys = evdev.ecodes.keys[event.scancode]
         key_name = (
-            sorted(keys, key=lambda x: len(x))[1]
-            if isinstance(keys, list)
-            else keys
+            sorted(keys, key=lambda x: len(x))[1] if isinstance(keys, list) else keys
         )
         self.keys[key_name] = event.keystate
 
@@ -39,16 +37,8 @@ class ControllerState:
 
     def __repr__(self, *, ommit_none: bool = False) -> str:
         if ommit_none:
-            keys = {
-                key: value
-                for key, value in self.keys.items()
-                if value is not None
-            }
-            axes = {
-                key: value
-                for key, value in self.axes.items()
-                if value is not None
-            }
+            keys = {key: value for key, value in self.keys.items() if value is not None}
+            axes = {key: value for key, value in self.axes.items() if value is not None}
         else:
             keys = self.keys
             axes = self.axes

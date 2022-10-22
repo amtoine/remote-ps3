@@ -16,9 +16,7 @@ def scale(val, src, dst):
 
     example: print(scale(99, (0.0, 99.0), (-1.0, +1.0)))
     """
-    return (float(val - src[0]) / (src[1] - src[0])) * (dst[1] - dst[0]) + dst[
-        0
-    ]
+    return (float(val - src[0]) / (src[1] - src[0])) * (dst[1] - dst[0]) + dst[0]
 
 
 def scale_stick(value):

@@ -10,18 +10,13 @@ OMMIT_NONE = True
 MOUSE_SPEED = 10
 
 
-def DEFAULT_CONTROLLER_HOOK(
-    controller_state: state.ControllerState, **kwargs
-) -> None:
+def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState, **kwargs) -> None:
     """Print the state of the controller."""
     print(controller_state.__repr__(ommit_none=OMMIT_NONE))
 
 
 def remote_hook(
-    controller_state: state.ControllerState,
-    *,
-    config: Dict[str, Any],
-    profile: str
+    controller_state: state.ControllerState, *, config: Dict[str, Any], profile: str
 ) -> str:
     """Procees the state the controller to emulate keyboard presses."""
     new_profile = profile
