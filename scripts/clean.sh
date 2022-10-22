@@ -1,21 +1,25 @@
 #!/usr/bin/env bash
 
 source config/install.sh
+source scripts/colors.sh
 
 if [ -d "$venv" ]; then
+  echo "${yellow}removing ${cyan}$venv${end}!"
   $RM -rf "$venv"
 else
-  echo "$venv is not installed..."
+  echo "${cyan}$venv${end} is ${red}not installed${end}..."
 fi
 
 if [ -f "$bin/$exe" ]; then
+  echo "${yellow}removing ${cyan}$bin/$exe${end}!"
   $RM "$bin/$exe"
 else
-  echo "$bin/$exe is not installed..."
+  echo "${cyan}$bin/$exe${end} is ${red}not installed${end}..."
 fi
 
-if [ -f "$exe" ]; then
-  $RM "$exe"
+if [ -f "build/$exe" ]; then
+  echo "${yellow}removing ${cyan}build/$exe${end}!"
+  $RM "build/$exe"
 else
-  echo "$exe not built..."
+  echo "${cyan}build/$exe${end} is ${red}not built${end}..."
 fi
