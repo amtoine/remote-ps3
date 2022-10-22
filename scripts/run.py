@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-import json
 import argparse
-from typing import Dict
-
-import evdev
-from rich import print
 
 from remote import device, hooks, utils
 

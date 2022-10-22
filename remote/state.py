@@ -3,8 +3,6 @@ from typing import Dict
 
 import evdev
 
-from remote import device
-
 AXIS_CENTER = 128
 AXIS_OFF_CENTER_TOLERANCE = 50
 
