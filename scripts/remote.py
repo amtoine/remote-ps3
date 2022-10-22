@@ -41,7 +41,7 @@ if __name__ == "__main__":
             "and `firefox` for all the rest (netflix, primevideos, ...)"
         ),
     )
-    default = "remote.json"
+    default = "config/remote.json"
     parser.add_argument(
         "--config",
         "-c",

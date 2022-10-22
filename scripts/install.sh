@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source config.sh
+source config/install.sh
 
 if [ ! -d "$venv" ]; then
   echo "not installed..."
@@ -18,7 +18,7 @@ path=$(pwd)
 cat << EOF > "$exe"
 #!/usr/bin/env bash
 source $venv/bin/activate
-python $path/remote.py --config $path/remote.json
+python $path/scripts/remote.py --config $path/config/remote.json
 EOF
 
 chmod +x "$exe"
