@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Callable, Dict
 
 from rich import print
 
@@ -6,6 +6,8 @@ from remote import computer, state
 
 OMMIT_NONE = True
 MOUSE_SPEED = 10
+
+Hook = Callable[[state.ControllerState, Dict[str, Any], str], str]
 
 
 def DEFAULT_CONTROLLER_HOOK(controller_state: state.ControllerState, **kwargs) -> None:

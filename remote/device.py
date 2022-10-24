@@ -1,4 +1,4 @@
-from typing import Callable, Dict, Any
+from typing import Dict, Any
 
 import evdev
 from rich import print
@@ -13,7 +13,7 @@ def get_device() -> evdev.device.InputDevice:
 
     # ask the user.
     for i, device in enumerate(devices):
-        print(f"{i+1}: {device.path} {device.name} {device.phys}")
+        print(f"{i + 1}: {device.path} {device.name} {device.phys}")
 
     index = prompt.rich_get_array_index_prompt(
         devices, binary_prompt="Connect to the [i]device[/i]?"
@@ -36,18 +36,21 @@ def listen_to(
     config: Dict[str, Any],
     profile: str,
     filename: str,
-    hook: Callable[[state.ControllerState], None] = hooks.DEFAULT_CONTROLLER_HOOK,
+    hook: hooks.Hook = hooks.DEFAULT_CONTROLLER_HOOK,
 ) -> None:
-    """Listen to a device and print the key presses and the axes state."""
+    """Listen to a device and execute a hook at each event."""
+    # initialize the state of the controller
     keys = {}
     for key in evdev.ecodes.keys.values():
-        keys[key[0] if isinstance(key, list) else key] = None
+        real_key = key[0] if isinstance(key, list) else key
+        keys[real_key] = None
     axes = {axis: None for axis in evdev.ecodes.ABS.values()}
     controller_state = state.ControllerState(keys=keys, axes=axes)
 
     print(f"Listening to {device}...")
     for event in device.read_loop():
 
+        # update the controller given the type of event
         if event.type == evdev.ecodes.EV_KEY:
             controller_state.update_keys(evdev.categorize(event))
 
@@ -55,7 +58,12 @@ def listen_to(
             controller_state.update_axis(evdev.categorize(event))
 
         if hook is not None:
-            new_profile = hook(controller_state, config=config, profile=profile)
+            new_profile = hook(
+                controller_state, config=config, profile=profile
+            )
+            # update the controller profile if changed in the event
             if profile != new_profile:
                 profile = new_profile
-                config = utils.get_config_with_profile(profile, filename=filename)
+                config = utils.get_config_with_profile(
+                    profile, filename=filename
+                )
