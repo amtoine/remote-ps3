@@ -12,6 +12,7 @@ keyboard = KeyboardController()
 
 
 def convert_action_to_key(action: Union[str, int]):
+    """Convert a single action to a single key."""
     if isinstance(action, int):
         key = KeyCode(action)
     elif isinstance(action, str):
@@ -23,6 +24,7 @@ def convert_action_to_key(action: Union[str, int]):
 
 
 def convert_action_to_keys(action: Union[str, int]):
+    """Convert the actions to actual keys."""
     if isinstance(action, list):
         keys = [convert_action_to_key(el) for el in action]
     else:
@@ -31,6 +33,8 @@ def convert_action_to_keys(action: Union[str, int]):
 
 
 def cycle_through_profiles(arg: str, kwargs: Dict[str, Any]) -> str:
+    """Cycle through the profiles defined in the utils module."""
+    # simply adds one to the index and wraps around the profiles
     profile = kwargs["profile"]
     idx = utils.PROFILES.index(profile)
     new_idx = (idx + 1) % len(utils.PROFILES)
@@ -40,6 +44,7 @@ def cycle_through_profiles(arg: str, kwargs: Dict[str, Any]) -> str:
 
 
 def send_keyboard_press(keys) -> None:
+    """Send the keyboard presses in order and release in reverse order."""
     for key in keys:
         keyboard.press(key)
 
@@ -50,16 +55,18 @@ def send_keyboard_press(keys) -> None:
 def send_keyboard_presses(
     actions: List[Union[str, int]], *, kwargs: Dict[str, Any]
 ) -> None:
-    all_keys = [convert_action_to_keys(action) for action in actions]
-    for keys in all_keys:
+    """Send presses to the keyboard, these might be multi-presses."""
+    for keys in [convert_action_to_keys(action) for action in actions]:
         send_keyboard_press(keys)
 
 
 def send_mouse_click(action: str, *, kwargs: Dict[str, Any]) -> None:
+    """Send a mouse click to the mouse."""
     mouse.click(Button.__dict__[action])
 
 
 def send_mouse_move(action: str, *, kwargs: Dict[str, Any]) -> None:
+    """Move the mouse according to the action."""
     px_speed = kwargs["value"] * kwargs["speed"]
     if action == "x":
         movement = (px_speed, 0)
@@ -79,6 +86,7 @@ ACTIONS = {
 def send(
     key: str, *, config: utils.Config, kwargs: Dict[str, Any]
 ) -> Union[None, str]:
+    """Send an action to the keyboard or the mouse if available in config."""
     if key in config:
         action, arg = config[key]
 
