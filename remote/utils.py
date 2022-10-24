@@ -5,8 +5,10 @@ import json
 
 PROFILES = ["qutebrowser", "mpv", "firefox"]
 
+Config = Dict[str, Any]
 
-def get_config_with_profile(profile: str, *, filename: str) -> Dict[str, Any]:
+
+def get_config_with_profile(profile: str, *, filename: str) -> Config:
     """Extract a profile from the global configuration."""
     with open(filename, "r") as remote_config_file:
         config = json.load(remote_config_file)

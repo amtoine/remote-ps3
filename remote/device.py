@@ -1,5 +1,3 @@
-from typing import Dict, Any
-
 import evdev
 from rich import print
 
@@ -33,7 +31,7 @@ def get_device() -> evdev.device.InputDevice:
 
 def listen_to(
     device: evdev.device.InputDevice,
-    config: Dict[str, Any],
+    config: utils.Config,
     profile: str,
     filename: str,
     hook: hooks.Hook = hooks.DEFAULT_CONTROLLER_HOOK,
