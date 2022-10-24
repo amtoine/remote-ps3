@@ -23,12 +23,17 @@ def remote_hook(
     config: utils.Config,
     profile: str
 ) -> str:
-    """Procees the state the controller to emulate keyboard presses."""
+    """Process the state of the controller to emulate keyboard presses.
+
+        This function additionally computes the new controller profile if
+        a switch-profile event is fired.
+    """
     new_profile = profile
     for key in controller_state.get_down_keys():
         result = computer.send(key, config=config, kwargs={"profile": profile})
         if result is not None:
             new_profile = result
+        # manually set the down key up again to avoid multiple ghost presses
         controller_state.keys[key] = 0
 
     for axis, value in controller_state.get_off_center_axes():
