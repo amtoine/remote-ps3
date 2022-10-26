@@ -9,7 +9,7 @@ if [ ! -d "$venv" ]; then
   virtualenv "$venv"
   source "$venv/bin/activate"
   pip install -r requirements.txt
-  pip install -e .
+  pip install .
   echo "installation of ${cyan}$venv${end} is ${green}successful${end}!"
 else
   echo "${cyan}$venv${end}is ${yellow}already installed${end}!"
