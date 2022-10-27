@@ -15,17 +15,22 @@ else
   echo "${cyan}$venv${end}is ${yellow}already installed${end}!"
 fi
 
-path=$(pwd)
-
 cat << EOF > "$exe"
 #!/usr/bin/env bash
 source $venv/bin/activate
-python $path/scripts/run.py --config $path/config/remote.json
+python $lib/run --config $lib/config.json
 EOF
 
 chmod +x "$exe"
 cp "$exe" "$bin" --verbose
+
 if [ ! -d "$build" ]; then
   mkdir "$build"
 fi
 mv "$exe" "$build" --verbose
+
+if [ ! -d "$lib" ]; then
+  mkdir "$lib"
+fi
+cp scripts/run.py "$lib/run" --verbose
+cp config/remote.json "$lib/config.json" --verbose
