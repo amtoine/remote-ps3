@@ -23,3 +23,10 @@ if [ -f "$build/$exe" ]; then
 else
   echo "${cyan}$build/$exe${end} is ${red}not built${end}..."
 fi
+
+if [ -d "$lib" ]; then
+  echo "${yellow}removing ${cyan}$lib${end}!"
+  $RM --recursive "$lib"
+else
+  echo "${cyan}$lib${end} is ${red}not built${end}..."
+fi
