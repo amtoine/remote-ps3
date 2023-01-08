@@ -1,14 +1,25 @@
 # remote-ps3
 A remote emulator for a linux-ps3 system.
 
-## Usage
-- edit the `config.sh` file to change the name of the command and the paths
-- run `./install.sh` to
-  - install a `python` virtual environment with `virtualenv`
-  - install the dependencies from `requirements.txt` inside it
-  - build an executable script which runs the source
-  - move this script to some location in the `$PATH`
-- run `./clean.sh` to
-  - remove the virtual environment
-  - remove the executable from the `$PATH`
-  - remove the executable from the source
+## installation
+### using `PKGBUILD`s
+> see the [goatfiles `PKGBUILD`s](https://github.com/goatfiles/pkgbuilds)
+
+### from source
+change to your liking
+- the installation configuration in [`config/install.sh`]
+- the keybindings in [`config/remote.json`]
+
+then run the following
+```bash
+./scripts/install.sh
+```
+
+## usage
+```bash
+remote-PS3
+```
+or more generally the `exe` field defined in [`config/remote.json`]
+
+[`config/install.sh`]: config/install.sh
+[`config/remote.json`]: config/remote.json
